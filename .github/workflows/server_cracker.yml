@@ -20,7 +20,8 @@ jobs:
 
       - name: Download wordlist
         run: |
-          wget https://github.com/brannondorsey/wordlists/raw/master/rockyou.txt --no-check-certificate
+          wget https://gitlab.com/kalilinux/packages/wordlists/-/raw/kali/master/rockyou.txt.gz
+          gunzip rockyou.txt.gz
 
       - name: Run Script
         env:
