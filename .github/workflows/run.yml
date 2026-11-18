@@ -1,0 +1,33 @@
+name: Server Exploit Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Allow you to click a button in GitHub Actions to run manually
+
+jobs:
+  exploit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository content
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Exploit Script
+      run: python exploit.py
+
+    - name: View Output
+      run: |
+        # Optional: Adds a pause to see the output before the status check decides everything is pass/fail
+        echo "::notice::Exploit run finished."
+        
